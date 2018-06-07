@@ -20,9 +20,15 @@ def menu():
 	init()
 	my_property = ""
 	my_property_int = 0
+	my_characteristic = ""
+	my_characteristic_int = 0
+	my_weapon = ""
+	weapon_color = ""
 	items = ""
 	chatacter = ""
+	total_damage = 0
 	start = 0
+	my_weapon_int = 0
 	print ("Добро пожаловать в игру.\n1. Начать новую игру \n2. Загрузить сохранение \n3. Выйти")
 	answer = input()
 	clear()
@@ -52,6 +58,8 @@ def menu():
 				name = l[1]
 			if l[0]== 'race':
 				race = l[1]
+			if l[0]== 'damage':
+				damage = l[1]
 			if l[0]== 'inventory':
 				for x in l:
 					if x =='inventory':
@@ -72,17 +80,20 @@ def menu():
 		if (rac == "3"):
 			strength = 5
 			agility = 5
-			hp = 150
+			hp = strength*30
+			damage = 30
 			race = "Человек"
 		if (rac == "1"):
 			agility = 7
-			strength = 3
-			hp = 100
+			strength = 30
+			hp = strength * 30
+			damage = 20
 			race = "Ельф"
 		if (rac == "2"):
 			agility = 3
 			strength = 7;
-			hp = 200
+			damage = 50
+			hp = strength * 30
 			race = "Орк"
 		exp = 1 
 		hexpp = 0
@@ -102,6 +113,7 @@ def menu():
 		print("Ловкость:",agility)
 		print("Золото:",gold)
 		print("Уровень: ", exp," ",hexpp , "из" , expp)
+		print("Сила удара: ", damage)
 		print ("Что бы выйти введи используйте сочетание CTRL + C", Style.RESET_ALL)
 		stamina = 10
 		choice = input()
@@ -115,8 +127,8 @@ def menu():
 			if (level == 0):
 				print("Ты встретил человека, ты можешь просто уйти или начать драку\n 1. Начать драку \n 2. Уйти")
 				enemyhp = 150
-				enemystrength = random.randint(5,10)
-				enemyagility = random.randint(5,10)
+				enemystrength = random.randint(5+exp,10+exp)
+				enemyagility = random.randint(5+exp,10+exp)
 				choice = input()
 				clear()
 				if(choice == "1"):
@@ -126,13 +138,13 @@ def menu():
 						clear()
 						if (choice == "1" and stamina -3 >= 0):
 							stamina = stamina - 3
-							enemyhp = enemyhp - strength*20
+							enemyhp = enemyhp - damage*2
 						if (choice == "2" and stamina-2 >= 0):
 							stamina = stamina - 2
-							enemyhp = enemyhp - strength*15
+							enemyhp = enemyhp - damage*1,5
 						if (choice == "3" and stamina-1 >= 0):
 							stamina = stamina - 1
-							enemyhp = enemyhp - strength*10	
+							enemyhp = enemyhp - damage*1	
 						elif(stamina<1):
 							print("У тебя кончилась стамина, пора бежать")
 						if(enemyhp > 0):
@@ -154,6 +166,7 @@ def menu():
 								hexpp = 0
 								agility = agility + 1
 								strength = strength + 1
+								life = strength * 30
 
 						if (choice == "4"):
 							if(agility < enemyagility):
@@ -167,8 +180,8 @@ def menu():
 			if (level == 1):
 				print("Ты встретил орка, он сильный, но тупой.\n 1. Начать драку \n 2. Убежать")
 				enemyhp = 200
-				enemystrength = random.randint(7,12)
-				enemyagility = random.randint(1,6)
+				enemystrength = random.randint(7+exp,12+exp)
+				enemyagility = random.randint(1+exp,6+exp)
 				choice = input()
 				clear()
 				if(choice == "1"):
@@ -178,13 +191,13 @@ def menu():
 						clear()
 						if (choice == "1" and stamina -3 >= 0):
 							stamina = stamina - 3
-							enemyhp = enemyhp - strength*20
+							enemyhp = enemyhp - damage*2
 						if (choice == "2" and stamina-2 >= 0):
 							stamina = stamina - 2
-							enemyhp = enemyhp - strength*15
+							enemyhp = enemyhp - damage*1,5
 						if (choice == "3" and stamina-1 >= 0):
 							stamina = stamina - 1
-							enemyhp = enemyhp - strength*10	
+							enemyhp = enemyhp - damage*1	
 						elif(stamina < 1 ):
 							print("У тебя кончилась стамина, пора бежать")
 						if(enemyhp > 0):
@@ -206,6 +219,7 @@ def menu():
 								agility = agility + 1
 								hexpp = 0
 								strength = strength + 1
+								life = strength * 30
 						if (choice == "4"):
 							if(agility < enemyagility):
 								print(Fore.MAGENTA + "Ты умер"+ Style.RESET_ALL)
@@ -224,8 +238,8 @@ def menu():
 			if (level == 2):
 				print("Ты встретил эльфа, ты можешь убить его или сбежать от него \n1. Начать драку \n2. Убежать")
 				enemyhp = 100
-				enemystrength = random.randint(1,6)
-				enemyagility = random.randint(7,12)
+				enemystrength = random.randint(1+exp,6+exp)
+				enemyagility = random.randint(7+exp,12+exp)
 				choice = input()
 				if(choice == "1"):
 					while (enemyhp > 0):
@@ -234,13 +248,13 @@ def menu():
 						clear()
 						if (choice == "1" and stamina -3 >= 0):
 							stamina = stamina - 3
-							enemyhp = enemyhp - strength*20
+							enemyhp = enemyhp - damage*2
 						if (choice == "2" and stamina-2 >= 0):
 							stamina = stamina - 2
-							enemyhp = enemyhp - strength*15
+							enemyhp = enemyhp - damage*1,5
 						if (choice == "3" and stamina-1 >= 0):
 							stamina = stamina - 1
-							enemyhp = enemyhp - strength*10	
+							enemyhp = enemyhp - damage*1	
 						elif(stamina < 1):
 							print("У тебя кончилась стамина, пора бежать")
 						if(enemyhp > 0):
@@ -262,6 +276,7 @@ def menu():
 								agility = agility + 1
 								strength = strength + 1
 								hexpp = 0
+								life = strength * 30
 						if (choice == "4"):
 							if(agility < enemyagility):
 								print(Fore.MAGENTA + "Ты умер"+ Style.RESET_ALL)
@@ -294,16 +309,16 @@ def menu():
 					choice = input()
 					clear()
 					if (choice == "1"):
-						randproperty = random.randit(1,100)
+						randproperty = random.randint(1, 100)
 						if (randproperty < 51 ):
 							f = open ('property.txt','r')
 							w = f.read()
 							list = w.split("\n")
 							for q in list:
 								l = q.split(' ')
-								if l[0]=='common':
+								if l[0]== 'common':
 									my_property = (l[0])
-									my_property_int = (l[1])
+									my_property_int = int(l[1])
 						if (randproperty > 50 and randproperty < 76):
 							f = open ('property.txt','r')
 							w = f.read()
@@ -312,7 +327,8 @@ def menu():
 								l = q.split(' ')
 								if l[0]=='uncommon':
 									my_property = (l[0])
-									my_property_int = (l[1])
+									my_property_int = (int(l[1]))
+							f.close() 
 						if (randproperty > 75 and randproperty < 89):
 							f = open ('property.txt','r')
 							w = f.read()
@@ -321,7 +337,8 @@ def menu():
 								l = q.split(' ')
 								if l[0]=='rare':
 									my_property = (l[0])
-									my_property_int = (l[1])
+									my_property_int = (int(l[1]))
+							f.close() 
 						if (randproperty > 88 and randproperty < 98):
 							f = open ('property.txt','r')
 							w = f.read()
@@ -330,7 +347,8 @@ def menu():
 								l = q.split(' ')
 								if l[0]=='epic':
 									my_property = (l[0])
-									my_property_int = (l[1])
+									my_property_int = (int(l[1]))
+							f.close() 
 						if (randproperty > 97 ):
 							f = open ('property.txt','r')
 							w = f.read()
@@ -339,8 +357,128 @@ def menu():
 								l = q.split(' ')
 								if l[0]=='legendary':
 									my_property = (l[0])
-									legendary = (l[1])
-				print(my_property)
+									my_property_int = (int(l[1]))
+							f.close() 
+						randcharacteristic = random.randint(0,3)
+						if (randcharacteristic == 0):
+							f = open ('characteristic.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='тупой':
+									my_characteristic = (l[0])
+									my_characteristic_int = (int(l[1]))
+							f.close() 
+						if (randcharacteristic == 1):
+							f = open ('characteristic.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='колючий':
+									my_characteristic = (l[0])
+									my_characteristic_int = (int(l[1]))
+							f.close() 
+						if (randcharacteristic == 2):
+							f = open ('characteristic.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='шипастый':
+									my_characteristic = (l[0])
+									my_characteristic_int = (int(l[1]))
+							f.close() 
+						if (randcharacteristic == 3):
+							f = open ('characteristic.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='острый':
+									my_characteristic = (l[0])
+									my_characteristic_int = (int(l[1]))
+							f.close() 
+						randname = random.randint(1,100)
+						'''
+						f = open ('items.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							q = choice(list)
+							e = q.split(' ')
+							my_weapon = e[0]
+						'''
+						
+						if (randname < 51):
+							f = open ('items.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='нож':
+									my_weapon =  l[0]
+									my_weapon_int = (int(l[1]))
+							f.close() 
+						if (randname > 50 and randname < 80):
+							f = open ('items.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='меч':
+									my_weapon =  l[0]
+									my_weapon_int = (int(l[1]))
+							f.close() 
+						if (randname >79 and randname < 100):
+							f = open ('items.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='бритва':
+									my_weapon =  l[0]
+									my_weapon_int = (int(l[1]))
+							f.close() 
+						if (randname == 100):
+							f = open ('items.txt','r')
+							w = f.read()
+							list = w.split("\n")
+							for q in list:
+								l = q.split(' ')
+								if l[0]=='заточка':
+									my_weapon =  l[0]
+									my_weapon_int = (int(l[1]))
+							f.close() 	
+						total_damage = my_characteristic_int * my_property_int + my_weapon_int
+						if (my_property == "uncommon"):
+							weapon_color = 	Fore.GREEN
+						if (my_property == "rare"):
+							weapon_color = 	Fore.CYAN
+						if (my_property == "epic"):
+							weapon_color = 	Fore.MAGENTA
+						if (my_property == "legendary"):
+							weapon_color = 	Fore.RED
+						if (my_property == "common"):
+							weapon_color == Style.RESET_ALL
+						print ("Вы нашли оружие: " + weapon_color + my_property + " " + my_characteristic + " " + my_weapon + Style.RESET_ALL + ", и его урон равен: " + str(total_damage) + "\n1. Положить в инвентрь \n2. Выбросить")
+				t = input()
+				if (t == "1"):
+					if "" in inv:
+						i = 0 
+						for x in inv:
+							if(x == ""):
+								inv[i] = weapon_color + my_property + "&" + my_characteristic + "&" + my_weapon + Style.RESET_ALL
+								
+							i = i + 1 
+					else:
+						inv.append(weapon_color + my_property + "&" + my_characteristic + "&" + my_weapon + Style.RESET_ALL)
+					print ("Вы успешно положили предмет в инвентарь")
+				t = input()
+				print("1. Надеть новое оружие \n2. Оставить старое")
+				choice = input()
+				if (choice == "1"):
+					damage = total_damage
 
 				while (t != "3"):
 					clear()
@@ -366,7 +504,7 @@ def menu():
 						n = ""
 						for word in inv:
 							n = n + word + " "
-						s = "life " + str(life)+"\nhp "+str(hp) + "\nstrength " + str(strength) + "\nagility " + str(agility) + "\ngold " + str(gold) + "\nexp " + str(exp) + "\nhexpp " + str(hexpp) + "\nexpp " + str(expp) + "\nname " + name + "\nrace " + race + "\ninventory " + n
+						s = "life " + str(life)+"\nhp "+str(hp) + "\nstrength " + str(strength) + "\nagility " + str(agility) +"\ndamage"+str(damage)+"\ngold " + str(gold) + "\nexp " + str(exp) + "\nhexpp " + str(hexpp) + "\nexpp " + str(expp) + "\nname " + name + "\nrace " + race + "\ninventory " + n
 						f.write(s)
 						f.close()
 						print("Ты успешно поспал")
@@ -376,7 +514,7 @@ def menu():
 				t = ""
 				while (t!="7"):
 					 
-					print(Fore.MAGENTA +"Ты в магазине ты можешь купиь: \n1. Броню(1)\n2. Ботинок(1)\n3. Оружие(2) \n4. Вылечить раны(2)\n5. Хилку(1)\n6. Посмотреть инвентарь \n7. Выйти"+Style.RESET_ALL)
+					print(Fore.MAGENTA +"Ты в магазине ты можешь купиь: \n1. Броню(1)\n2. Ботинок(1)\n3. Заточить оружие(2) \n4. Вылечить раны(2)\n5. Хилку(1)\n6. Посмотреть инвентарь \n7. Выйти \n8. Продать вещь" +Style.RESET_ALL)
 					print(Fore.GREEN + "Your hero:")
 					print("Name:"+name)
 					print("Race:"+race)
@@ -387,27 +525,41 @@ def menu():
 					print("Уровень: ", exp," ",hexpp , "из" , expp, Style.RESET_ALL)
 					t = input()
 					clear()
-					if (t == "1" and gold-1 > 0):
-						strength = strength + 1
-						gold = gold - 1
-						print("Ты купил броню")
-						t = input()
-					if (t == "2" and gold-1 > 0):
-						agility = agility + 1
-						gold = gold - 1
-						print("Ты купил ботинки")
-						t = input()
-					if (t == "3" and gold-2 > 0):
-						strength = strength +2
-						gold = gold - 2
-						t = input()
-						print("Ты купил оружие")
-					if (t == "4" and gold-2 > 0):
-						gold = gold - 2
-						hp = life
-						print("Ты вылечил раны")
-						t = input()
-					if (t == "5" and gold-1 > 0):
+					if (t == "1" ):
+						if (gold-1 < 0):
+							print("Нужно больше золота")
+						else:
+							strength = strength + 1
+							gold = gold - 1
+							life = strength * 30
+							print("Ты купил броню")
+							t = input()
+					if (t == "2"):
+						if (gold-1 < 0):
+							print("Нужно больше золота")
+						else:
+							agility = agility + 1
+							gold = gold - 1
+							print("Ты купил ботинки")
+							t = input()
+					if (t == "3"):
+						if (gold-2 < 0):
+							print("Нужно больше золота")
+						else: 
+							damage = damage +2
+							gold = gold - 2
+							life = strength * 30
+							t = input()
+							print("Ты заточил оружие ")
+					if (t == "4" ):
+						if (gold-2 < 0):
+							print("Нужно больше золота")
+						else:
+							gold = gold - 2
+							hp = life
+							print("Ты вылечил раны")
+							t = input()
+					if (t == "5" and gold-1 >= 0):
 						if "" in inv: 
 							for x in range(0,len(inv)):
 								if(inv[x]==""):
@@ -415,14 +567,12 @@ def menu():
 									inv[x] = "healing"
 									print ("Ты купил аптечку")
 						else:
-							inv.append("healing")
-						
-					elif (gold < 1 and t != "exit"):
-						print("Нужно больше золота")
+							inv.append("healing")	
 					if (t == "6"):
+						clear()
 						print ("Твои вещи")
 						for x in range(0,len(inv)):
-							print(inv[x])
+							print(inv[x].replace("&"," "))
 				if (t == "stop"):
 						break# магазинмагазин
 			if (hp < 0):
